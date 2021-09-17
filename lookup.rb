@@ -37,15 +37,22 @@ def get_command_line_argument
   end
 
   def resolve(array,chain,url)
+    j=0
     array.each do |element|
         if element[1].strip.eql? url.strip
+            j=1
             chain.push(element[2])                
             if element[0].strip.eql? "CNAME"
                 chain=resolve(array,chain,element[2])
             end
         end
     end
+    if j==1
     chain
+    else
+      chain=["Error: record not found for #{url}"]
+    end
+    
   end
 
 
@@ -55,4 +62,12 @@ def get_command_line_argument
   dns_records = parse_dns(dns_raw)
   lookup_chain = [domain]
   lookup_chain = resolve(dns_records, lookup_chain, domain)
-  puts lookup_chain.join(" => ")
+  #cnt=lookup_chain.count()
+  #puts cnt
+  #if cnt>1
+  puts lookup_chain.join(" => ")  
+  #else
+  #  puts lookup_chain
+  #nd
+  #puts lookup_chain
+ 
