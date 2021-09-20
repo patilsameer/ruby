@@ -25,10 +25,10 @@ def get_command_line_argument
   # ..
 
   def parse_dns(dns_raw)
-    remove_empty_n_hashlines=dns_raw.reject { |line| line.empty? or line[0] == "#" }#removing hash and empty lines,string
-    split_data=remove_empty_n_hashlines.map { |line| line.strip.split(", ") }#split the entry into columns using ','
-    discard_fake_record_entry=split_data.reject { |record| record.length < 3 }# discarding false entries in zone file
-    discard_fake_record_entry.each_with_object({}) do |record, records|# preparing hash for dns entries
+    rmv_hsh_n_emt_str=dns_raw.reject { |line| line.empty? or line[0] == "#" }#removing hash and empty lines,string
+    split_data=rmv_hsh_n_emt_str.map { |line| line.strip.split(", ") }#split the entry into columns using ','
+    rmvd_fls_rcrd=split_data.reject { |record| record.length < 3 }# discarding false entries in zone file
+    rmvd_fls_rcrd.each_with_object({}) do |record, records|# preparing hash for dns entries
       records[record[1]] = {
         type: record[0],
         target: record[2],
