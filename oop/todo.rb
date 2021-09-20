@@ -1,11 +1,25 @@
 require "date"
 
 class Todo
+  def initialize(todo_task,date,status)
+    @todo_task=todo_task
+    @date=date
+    @status=status
+    obj=[ { text: todo_task, due_date: date, completed: status }]
+   return obj
+  end
   # ..
   # ..
   # FILL YOUR CODE HERE
   # ..
   # ..
+  def overdue?
+    if @date < Date.today
+      return true
+    else
+      return false
+    end
+  end
 
   def to_displayable_string
     # FILL YOUR CODE HERE
@@ -20,6 +34,10 @@ class TodosList
   def overdue
     TodosList.new(@todos.filter { |todo| todo.overdue? })
   end  
+
+  def add(todo_obj)
+    @todos.push(todo_obj)
+  end
 
   # ..
   # ..
