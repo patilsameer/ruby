@@ -25,30 +25,16 @@ def get_command_line_argument
   # ..
 
   def parse_dns(dns_raw)
-    data=dns_raw.reject { |line| line.empty? or line[0] == "#" }
-    data1=data.map { |line| line.strip.split(", ") }
-    data2=data1.reject { |record| record.length < 3 }
-    data2.each_with_object({}) do |record, records|
+    remove_empty_n_hashlines=dns_raw.reject { |line| line.empty? or line[0] == "#" }#removing hash and empty lines,string
+    split_data=remove_empty_n_hashlines.map { |line| line.strip.split(", ") }#split the entry into columns using ','
+    discard_fake_record_entry=split_data.reject { |record| record.length < 3 }# discarding false entries in zone file
+    discard_fake_record_entry.each_with_object({}) do |record, records|# preparing hash for dns entries
       records[record[1]] = {
         type: record[0],
         target: record[2],
       }
     end
   end
-
-  #def parse_dns(dns_raw)
-  #  result=[]
-  #  dns_raw.select do |row|
-  #      str=row[0]
-  #      if str!='#' && !(str.nil? || str.strip.empty?)#to remove lines with # and whitespaces blanks empty lines
-  #          temp=row.split(',')
-  #          if(temp.>3)
-  #          result.push(temp)
-  #          end
-  #      end
-  #  end
-  # result
-  #end
 
   def resolve(dns_records, lookup_chain, domain)
     record = dns_records[domain]
@@ -64,26 +50,6 @@ def get_command_line_argument
       lookup_chain << "Invalid record type for " + domain
     end
   end
-
-
-  #def resolve(array,chain,url)
-  #  j=0
-  #  array.each do |element|
-  #      if element[1].strip.eql? url.strip
-  #          j=1
-  #          chain.push(element[2])                
-  #          if element[0].strip.eql? "CNAME"
-  #              chain=resolve(array,chain,element[2])
-  #          end
-  #      end
-  #  end
-  #  if j==1
-  #  chain
-  #  else
-  #    chain=["Error: record not found for #{url}"]
-  #  end
-    
-  #end
 
 
   # To complete the assignment, implement `parse_dns` and `resolve`.
