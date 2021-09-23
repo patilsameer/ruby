@@ -5,8 +5,8 @@ class Todo
     @todo_task=todo_task
     @date=date
     @status=status
-    obj=[ { text: todo_task, due_date: date, completed: status }]
-   return obj
+   # obj=[ { text: todo_task, due_date: date, completed: status }]
+   #return obj
   end
   # ..
   # ..
@@ -21,8 +21,24 @@ class Todo
     end
   end
 
+  def due_today?
+    if @date == Date.today
+      return true
+    else
+      return false
+    end
+  end
+
+  def due_later?
+    if @date > Date.today
+      return true
+    else
+      return false
+    end
+  end
+
   def to_displayable_string
-    # FILL YOUR CODE HERE
+    "#{todo_task} #{date} #{status}"
   end
 end
 
@@ -39,6 +55,13 @@ class TodosList
     @todos.push(todo_obj)
   end
 
+  def due_today
+    TodosList.new(@todos.filter{ |todo| todo.due_today?})
+  end
+
+  def due_later
+    TodosList.new(@todos.filter{ |todo| todo.due_later?})
+  end
   # ..
   # ..
   # FILL YOUR CODE HERE
@@ -46,7 +69,7 @@ class TodosList
   # ..
 
   def to_displayable_list
-    # FILL YOUR CODE HERE
+    "#{@to_displayable_string}"
   end
 end
 
