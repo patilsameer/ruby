@@ -5,7 +5,7 @@ class Todo
     @todo_task=todo_task
     @date=date
     @status=status
-   # obj=[ { text: todo_task, due_date: date, completed: status }]
+   #[ { text: todo_task, due_date: date, completed: status }]
    #return obj
   end
   # ..
@@ -38,7 +38,9 @@ class Todo
   end
 
   def to_displayable_string
-    "#{@todo_task} #{@date} #{@status}"
+    #"final"
+    "#{@todo_task}  #{@date} #{@status}"
+    #"is returned"
   end
 end
 
@@ -69,8 +71,12 @@ class TodosList < Todo
   # ..
 
   def to_displayable_list
-    #"values #{@todos}.#{to_displayable_string}"
-    "#{@todos}.#{to_displayable_string}"
+   # @todos.each {|item| item.to_displayable_string}
+   #@todos.keys.each{|item| item.to_displayable_string}
+   #@todos.each{|item| item.to_displayable_string}
+   ####"#{@todos}.#{to_displayable_string}"
+   @todos.map{|item| item.to_displayable_string}
+   #"#{@todos}.#{@each{}#{to_displayable_string}"
   end
 end
 
