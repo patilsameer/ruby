@@ -38,11 +38,11 @@ class Todo
   end
 
   def to_displayable_string
-    "#{todo_task} #{date} #{status}"
+    "#{@todo_task} #{@date} #{@status}"
   end
 end
 
-class TodosList
+class TodosList < Todo
   def initialize(todos)
     @todos = todos
   end
@@ -69,7 +69,8 @@ class TodosList
   # ..
 
   def to_displayable_list
-    "#{@to_displayable_string}"
+    #"values #{@todos}.#{to_displayable_string}"
+    "#{@todos}.#{to_displayable_string}"
   end
 end
 
