@@ -39,7 +39,12 @@ class Todo
 
   def to_displayable_string
     #"final"
-    "#{@todo_task}  #{@date} #{@status}"
+    if @date==Date.today
+      "#{@todo_task}"
+    else
+      "#{@todo_task}  #{@date}" 
+    end
+    #{@status}"
     #"is returned"
   end
 end
